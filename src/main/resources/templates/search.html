@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:test="郵便番号検索"></title>
+<style>
+.address {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+</style>
+</head>
+<body>
+	<h1>郵便番号検索</h1>
+	<p>郵便番号を元に住所を調べます</p>
+	<form action="" method="post">
+		<p>
+			<input type="text" name="zipcode" th:value="${param.zipcode}" /> <input
+				type="submit" value="検索" />
+		</p>
+	</form>
+	<!-- 検索結果 -->
+	<th:block th:if="${zipinfo}" th:switch="${zipinfo.status}">
+		<th:block th:case="200">
+			<div class="address" th:each="r:${zipinfo.results}">
+			<!-- 警告の波線が出ているが表示は問題なし -->
+			<!-- <rb>タグでも同様 -->
+			<ruby>
+				[[${r.address1}]]<rt th:text="${r.kana1}"></rt>
+				[[${r.address2}]]<rt th:text="${r.kana2}"></rt>
+				[[${r.address3}]]<rt th:text="${r.kana3}"></rt>
+			</ruby>
+			</div>
+		</th:block>
+		<p th:case="*">該当する住所は見つかりませんでした。</p>
+	</th:block>
+</body>
+</html>
