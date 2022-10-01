@@ -20,10 +20,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Controller
 @RequestMapping("/search")
 public class ZipcodeController {
+
 	@GetMapping
 	public String searchGet() {
 		return "search";
 	}
+	
 	@PostMapping
 	public String searchPost(@RequestParam String zipcode, Model model) throws IOException, InterruptedException {
 		//エンドポイント + 郵便番号
@@ -33,7 +35,7 @@ public class ZipcodeController {
 		HttpClient client = HttpClient.newBuilder().build();
 		HttpRequest request = HttpRequest.newBuilder(URI.create(uri)).build();
 		
-		//リクエストを送信して、結果をJSONP文字列をして取得する
+		//リクエストを送信して、結果をJSONP文字列にして取得する
 		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 		System.out.println(response.body());
 		
